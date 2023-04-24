@@ -8,9 +8,9 @@ const user = new User({ id: 1 });
 //   console.log(user);
 // }, 4000);
 
-user.set({
-  // name: "azar",
-  age: 44,
-});
+// user.set({
+//   // name: "azar",
+//   age: 44,
+// });
 
-user.save();
+// user.save();
