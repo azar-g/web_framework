@@ -3,27 +3,42 @@ import { Eventing } from "./Eventing";
 import { Attributes } from "./Attribites";
 
 export interface UserProps {
-  id: number;
-  name: string;
-  age: number;
+  id?: number;
+  name?: string;
+  age?: number;
 }
 
 const rootUrl = "http://localhost:3000/users";
 
 export class User {
   public events: Eventing = new Eventing();
+
   public sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
+
   public attributes: Attributes<UserProps>;
 
   constructor(attrs: UserProps) {
     this.attributes = new Attributes<UserProps>(attrs);
   }
+
+  get on() {
+    return this.events.on;
+  }
+  get trigger() {
+    return this.events.trigger;
+  }
+  get get() {
+    return this.attributes.get;
+  }
+
+  set(update: UserProps) {
+    this.attributes.set(update);
+    this.events.trigger("change");
+  }
+
+  async fetch(id: number) {
+    const { data } = await this.sync.fetch(id);
+    console.log(data);
+    this.set(data);
+  }
 }
-
-const user = new User({
-  id: 5,
-  name: "aaaa",
-  age: 22,
-});
-
-console.log(user.attributes.get("name"));
