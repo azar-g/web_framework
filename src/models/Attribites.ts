@@ -1,3 +1,4 @@
+import { UserProps } from "./User";
 export class Attributes<T extends object> {
   constructor(private data: T) {
     // console.log(data);
@@ -11,5 +12,10 @@ export class Attributes<T extends object> {
 
   set = (update: T): void => {
     Object.assign(this.data, update);
+  };
+
+  getAll = (): UserProps => {
+    console.log(this.data);
+    return this.data;
   };
 }
